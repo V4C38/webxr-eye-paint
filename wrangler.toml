@@ -11,7 +11,7 @@ bindings = [
 ]
 
 [[migrations]]
-tag = "v1"
-new_classes = ["PainterRoom"]
+tag = "v2"
+new_sqlite_classes = ["PainterRoom"]
 
 
