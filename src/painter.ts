@@ -74,6 +74,7 @@ export class Painter {
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
+    this.drawCenterDot(eye);
     if (markDirty) this.dirty[eye] = true;
   }
 
@@ -81,6 +82,7 @@ export class Painter {
     const { ctx, canvas } = this.eyes[eye];
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    this.drawCenterDot(eye);
     if (markDirty) this.dirty[eye] = true; else this.dirty[eye] = false;
   }
 
@@ -133,6 +135,19 @@ export class Painter {
     const sx = el.width / rect.width;
     const sy = el.height / rect.height;
     return { x: (x) * sx, y: (y) * sy };
+  }
+
+  private drawCenterDot(eye: Eye): void {
+    const { ctx, canvas } = this.eyes[eye];
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    ctx.save();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(255,0,0,1)';
+    ctx.beginPath();
+    ctx.arc(cx, cy, Math.max(2, Math.floor(this.size * 0.003)), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
   }
 }
 

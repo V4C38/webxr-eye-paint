@@ -20,6 +20,9 @@ export class XRView {
     renderer.xr.enabled = true;
     renderer.xr.setReferenceSpaceType('local-floor');
     renderer.setClearColor(0x000000, 1);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.NoToneMapping;
+    renderer.toneMappingExposure = 1.0;
     this.renderer = renderer;
 
     const scene = new THREE.Scene();
@@ -43,8 +46,8 @@ export class XRView {
 
     // Two planes, one per eye; sized per-eye each XR frame to fill FOV
     const geo = new THREE.PlaneGeometry(1, 1);
-    const leftMat = new THREE.MeshBasicMaterial({ map: leftTex, transparent: true, depthTest: false, depthWrite: false });
-    const rightMat = new THREE.MeshBasicMaterial({ map: rightTex, transparent: true, depthTest: false, depthWrite: false });
+    const leftMat = new THREE.MeshBasicMaterial({ map: leftTex, transparent: false, depthTest: false, depthWrite: false });
+    const rightMat = new THREE.MeshBasicMaterial({ map: rightTex, transparent: false, depthTest: false, depthWrite: false });
     const leftMesh = new THREE.Mesh(geo, leftMat);
     const rightMesh = new THREE.Mesh(geo, rightMat);
     leftMesh.layers.set(1);
@@ -76,11 +79,12 @@ export class XRView {
     const tmpQuat = new THREE.Quaternion();
     const placeQuadInFrontOfEye = (eyeCam: THREE.PerspectiveCamera, mesh: THREE.Mesh): void => {
       const d = 0.6; // meters in front of eye
-      // fov is in degrees
-      const fov = eyeCam.fov * Math.PI / 180;
-      const aspect = eyeCam.aspect;
-      const height = 2 * d * Math.tan(fov / 2);
-      const width = height * aspect;
+      // Compute plane size using projection matrix to fully cover frustum
+      const m = eyeCam.projectionMatrix.elements;
+      const m00 = m[0]; // = 1 / tan(fovX/2)
+      const m11 = m[5]; // = 1 / tan(fovY/2)
+      const width = (2 * d) / m00;
+      const height = (2 * d) / m11;
       eyeCam.getWorldPosition(tmpPos);
       eyeCam.getWorldDirection(tmpDir);
       eyeCam.getWorldQuaternion(tmpQuat);
