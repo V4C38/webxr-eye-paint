@@ -1,0 +1,17 @@
+name = "webxr-eye-paint"
+main = "worker/src/index.ts"
+compatibility_date = "2024-11-01"
+
+# Serve Vite build output as static assets
+assets = { directory = "./dist" }
+
+[durable_objects]
+bindings = [
+  { name = "PAINTER_ROOM", class_name = "PainterRoom" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["PainterRoom"]
+
+

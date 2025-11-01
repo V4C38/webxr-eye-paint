@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebXR Eye Paint</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="xr-bar">
+        <button id="xr-button" class="xr-btn" title="In VR öffnen">🕶️ In VR öffnen</button>
+      </div>
+      <header class="toolbar">
+        <div class="tool-group">
+          <label><input type="radio" name="tool" id="tool-brush" checked /> 🖌️ Pinsel</label>
+          <label><input type="radio" name="tool" id="tool-eraser" /> 🧽 Radierer</label>
+        </div>
+        <div class="tool-group">
+          <div class="color-controls">
+            <canvas id="color-wheel" width="160" height="160" aria-label="Farbkreis"></canvas>
+            <div class="slider">
+              <label for="brightness">Helligkeit</label>
+              <input id="brightness" type="range" min="0" max="1" step="0.01" value="1" />
+            </div>
+          </div>
+        </div>
+        <div class="tool-group">
+          <label>Breite <input id="width" type="range" min="1" max="2048" value="40" /></label>
+          <label>Weiche Kante <input id="feather" type="range" min="0" max="1" step="0.01" value="0.5" /></label>
+        </div>
+      </header>
+
+      <main class="canvases">
+        <section class="eye">
+          <h2>Linkes Auge</h2>
+          <div class="circle">
+            <canvas id="left" width="2048" height="2048"></canvas>
+            <div id="left-cursor" class="cursor-ring" aria-hidden="true"></div>
+            <svg class="fov-overlay" viewBox="0 0 1000 1000" aria-hidden="true">
+              <defs>
+                <mask id="mask-left">
+                  <rect x="0" y="0" width="1000" height="1000" fill="white" />
+                  <rect x="110" y="70" width="780" height="860" rx="320" ry="320" fill="black" />
+                </mask>
+              </defs>
+              <rect x="0" y="0" width="1000" height="1000" fill="rgba(0,0,0,0.35)" mask="url(#mask-left)" />
+            </svg>
+          </div>
+          <button id="clear-left" class="clear-btn">🗑️ Leeren</button>
+        </section>
+        <section class="eye">
+          <h2>Rechtes Auge</h2>
+          <div class="circle">
+            <canvas id="right" width="2048" height="2048"></canvas>
+            <div id="right-cursor" class="cursor-ring" aria-hidden="true"></div>
+            <svg class="fov-overlay" viewBox="0 0 1000 1000" aria-hidden="true">
+              <defs>
+                <mask id="mask-right">
+                  <rect x="0" y="0" width="1000" height="1000" fill="white" />
+                  <rect x="110" y="70" width="780" height="860" rx="320" ry="320" fill="black" />
+                </mask>
+              </defs>
+              <rect x="0" y="0" width="1000" height="1000" fill="rgba(0,0,0,0.35)" mask="url(#mask-right)" />
+            </svg>
+          </div>
+          <button id="clear-right" class="clear-btn">🗑️ Leeren</button>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+  </html>
+
+

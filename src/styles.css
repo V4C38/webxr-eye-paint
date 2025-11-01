@@ -1,0 +1,65 @@
+:root {
+  color-scheme: dark;
+  --bg: radial-gradient(1200px 600px at 20% 0%, #0f1421 0%, #0b0d14 40%, #0b0c10 100%);
+  --panel: rgba(20, 24, 33, 0.6);
+  --panel-border: rgba(255, 255, 255, 0.06);
+  --fg: #e6e9ef;
+  --muted: #a0a6b0;
+  --accent: #5aa7ff;
+  --accent-2: #9b7dff;
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; margin: 0; background: var(--bg); color: var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+
+#app { max-width: 1200px; margin: 0 auto; }
+
+.toolbar {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--panel-border);
+  margin: 16px;
+  background: var(--panel);
+  backdrop-filter: saturate(160%) blur(8px);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.xr-bar { position: sticky; top: 0; z-index: 10; display:flex; justify-content:center; padding: 16px; border-bottom: 1px solid var(--panel-border); backdrop-filter: saturate(180%) blur(10px); background: linear-gradient(180deg, rgba(10,12,18,0.7), rgba(10,12,18,0.3)); }
+.xr-bar .xr-btn { font-size: 20px; padding: 14px 22px; border-radius: 12px; min-height: 52px; min-width: 260px; background: linear-gradient(135deg, #1c2433, #151b28); border: 1px solid #2c3340; box-shadow: var(--shadow); }
+.tool-group { display: flex; align-items: center; gap: 12px; padding: 8px; border: 1px solid var(--panel-border); border-radius: 12px; background: rgba(255,255,255,0.02); flex-wrap: wrap; }
+.color-controls { display: flex; align-items: center; gap: 12px; }
+.color-controls { flex-wrap: wrap; }
+.slider { display: flex; flex-direction: column; font-size: 12px; color: var(--muted); }
+.xr-btn { background: #1a1f2a; color: var(--fg); border: 1px solid #2c3340; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: transform 0.06s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+.xr-btn:hover { border-color: var(--accent); }
+.xr-btn:active { transform: translateY(1px) scale(0.99); }
+
+.tool-group label { border: 1px solid var(--panel-border); background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 8px; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
+.tool-group label:hover { border-color: rgba(255,255,255,0.12); }
+label:has(input[type="radio"]:checked) { border-color: var(--accent); background: rgba(90,167,255,0.12); }
+
+.canvases {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 24px 16px 48px;
+}
+.eye { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.eye h2 { font-size: 14px; font-weight: 600; color: var(--muted); margin: 0 0 8px; letter-spacing: 0.3px; }
+.circle { position: relative; aspect-ratio: 1 / 1; width: 74%; margin: 0 auto; border-radius: 50%; overflow: hidden; background: radial-gradient(60% 60% at 50% 40%, #0e1220, #0b0d12); border: 1px solid #262a33; display: grid; place-items: center; box-shadow: var(--shadow); }
+.circle canvas { width: 100%; height: 100%; display: block; cursor: none; }
+.fov-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.cursor-ring { position: absolute; left: 0; top: 0; border: 1px solid rgba(255,255,255,0.9); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); box-shadow: 0 0 0 1px rgba(0,0,0,0.6) inset; mix-blend-mode: difference; display: none; }
+.clear-btn { margin: 10px auto 0; background: linear-gradient(135deg, #2a1a1a, #201414); color: #ffdede; border: 1px solid #3c2929; padding: 8px 12px; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; justify-content: center; box-shadow: var(--shadow); }
+.clear-btn:hover { border-color: #ff7a7a; }
+
+label { display: inline-flex; align-items: center; gap: 6px; }
+input[type="range"] { accent-color: var(--accent); }
+input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: linear-gradient(90deg, rgba(90,167,255,0.5), rgba(155,125,255,0.5)); }
+input[type="range"]::-webkit-slider-thumb { margin-top: -6px; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-shadow: var(--shadow); }
+
+

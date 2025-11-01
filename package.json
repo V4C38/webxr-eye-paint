@@ -1,0 +1,26 @@
+{
+  "name": "webxr-eye-paint",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "dev:worker": "wrangler dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy"
+  },
+  "dependencies": {
+    "three": "^0.165.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241112.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.8",
+    "wrangler": "^3.85.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
+
