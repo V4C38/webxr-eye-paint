@@ -46,8 +46,8 @@ export class XRView {
 
     // Two planes, one per eye; sized per-eye each XR frame to fill FOV
     const geo = new THREE.PlaneGeometry(1, 1);
-    const leftMat = new THREE.MeshBasicMaterial({ map: leftTex, transparent: false, depthTest: false, depthWrite: false });
-    const rightMat = new THREE.MeshBasicMaterial({ map: rightTex, transparent: false, depthTest: false, depthWrite: false });
+    const leftMat = new THREE.MeshBasicMaterial({ map: leftTex, transparent: true, depthTest: false, depthWrite: false });
+    const rightMat = new THREE.MeshBasicMaterial({ map: rightTex, transparent: true, depthTest: false, depthWrite: false });
     const leftMesh = new THREE.Mesh(geo, leftMat);
     const rightMesh = new THREE.Mesh(geo, rightMat);
     leftMesh.layers.set(1);

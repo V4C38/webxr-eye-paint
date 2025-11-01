@@ -95,11 +95,12 @@ export class Painter {
   private stamp(eye: Eye, cx: number, cy: number): void {
     const { ctx } = this.eyes[eye];
     const size = Math.max(1, Math.floor(this.brushWidth));
-    const feather = this.feather;
-    const key = `${size}:${feather}`;
+    // Make eraser more feathered than brush at the same slider value
+    const effectiveFeather = this.tool === 'eraser' ? Math.min(1, this.feather * 1.75) : this.feather;
+    const key = `${size}:${this.tool}:${effectiveFeather}`;
     let stampCanvas = this.stampCache.get(key);
     if (!stampCanvas) {
-      stampCanvas = createBrushStamp(size, feather);
+      stampCanvas = createBrushStamp(size, effectiveFeather);
       this.stampCache.set(key, stampCanvas);
     }
     ctx.save();
